@@ -1,0 +1,60 @@
+﻿@model QuanLyHocPhanMVC.Models.HocPhan
+
+@{
+    ViewData["Title"] = "Chi tiết học phần";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+        <div class="custom-card shadow-sm border-0">
+            <div class="d-flex align-items-center justify-content-between border-bottom pb-4 mb-4">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary text-white rounded-3 p-3 me-3 shadow-sm">
+                        <i class="bi bi-info-circle-fill fs-3"></i>
+                    </div>
+                    <div>
+                        <h2 class="fw-bold mb-0">@Model.TenHocPhan</h2>
+                        <span class="badge bg-light text-primary border border-primary px-3 mt-1">@Model.MaHocPhan</span>
+                    </div>
+                </div>
+                <div class="d-none d-sm-block">
+                    <a href="/HocPhan/Edit/@Model.IDHocPhan" class="btn btn-outline-success rounded-pill px-4 me-2">
+                        <i class="bi bi-pencil-square me-1"></i> Sửa
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-sm-6">
+                    <div class="p-3 bg-light rounded-4">
+                        <label class="text-muted small text-uppercase fw-bold d-block mb-1">Số tín chỉ</label>
+                        <span class="fs-4 fw-bold text-dark">@Model.SoTinChi tín chỉ</span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-3 bg-light rounded-4">
+                        <label class="text-muted small text-uppercase fw-bold d-block mb-1">Trạng thái</label>
+                        <span class="fs-5 fw-semibold text-success"><i class="bi bi-check-all me-1"></i> Đang giảng dạy</span>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="p-3 bg-light rounded-4">
+                        <label class="text-muted small text-uppercase fw-bold d-block mb-1">Mô tả chi tiết</label>
+                        <p class="text-dark mb-0 fs-6">
+                            @(string.IsNullOrEmpty(Model.MoTa) ? "Không có mô tả chi tiết cho học phần này." : Model.MoTa)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 d-flex gap-2">
+                <a href="/HocPhan/DanhSach" class="btn btn-light rounded-pill px-4 fw-bold text-muted border">
+                    <i class="bi bi-arrow-left me-2"></i> Trở về
+                </a>
+                <div class="ms-auto d-sm-none">
+                    <a href="/HocPhan/Edit/@Model.IDHocPhan" class="btn btn-success rounded-pill px-4 fw-bold">Sửa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

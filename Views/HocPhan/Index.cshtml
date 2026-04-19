@@ -1,0 +1,77 @@
+﻿@{
+    string userRole = Context.Session.GetString("Role");
+    bool isAdmin = userRole == "Admin";
+}
+
+@if (isAdmin)
+{
+    <a href="/HocPhan/Create">Thêm học phần</a>
+    <br /><br />
+}
+
+@model List<QuanLyHocPhanMVC.Models.HocPhan>
+
+<h2>Danh sách học phần</h2>
+
+@if (!isAdmin)
+{
+    <div style="background-color: #e7f3ff; border: 1px solid #b3d9ff; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+        <p style="color: #004085; margin: 0;">
+            <strong>ℹ️ Bạn đang ở chế độ Xem:</strong> Bạn chỉ có quyền xem các học phần. Liên hệ Quản trị viên để chỉnh sửa.
+        </p>
+    </div>
+}
+
+<table border="1" cellpadding="10">
+    <form method="get">
+
+        <input type="text" name="search" placeholder="Tìm học phần..." />
+
+        <button type="submit">Search</button>
+
+    </form>
+
+    <br />
+
+    <tr>
+        <th>ID</th>
+        <th>Mã học phần</th>
+        <th>Tên học phần</th>
+        <th>Số tín chỉ</th>
+        <th>Mô tả</th>
+        @if (isAdmin)
+        {
+            <th>Action</th>
+        }
+    </tr>
+
+    @foreach (var hp in Model)
+    {
+        <tr>
+            <td>@hp.IDHocPhan</td>
+            <td>@hp.MaHocPhan</td>
+            <td>@hp.TenHocPhan</td>
+            <td>@hp.SoTinChi</td>
+            <td>@hp.MoTa</td>
+
+            @if (isAdmin)
+            {
+                <td>
+                    <a href="/HocPhan/Edit/@hp.IDHocPhan">Edit</a> |
+                    <a href="/HocPhan/Delete/@hp.IDHocPhan"
+                       onclick="return confirm('Bạn có chắc muốn xóa học phần này không?')">
+                        Delete
+                    </a>
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>
+<br />
+
+@for (int i = 1; i <= ViewBag.TotalPages; i++)
+{
+    <a href="/HocPhan?page=@i">Trang @i</a> <span> </span>
+}

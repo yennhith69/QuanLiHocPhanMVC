@@ -1,0 +1,251 @@
+﻿@{
+    ViewData["Title"] = "Báo cáo thống kê thực tế";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 animate-slide-up">
+    <div>
+        <h2 class="fw-800 mb-1 text-dark">Hệ thống Dashboard</h2>
+        <p class="text-muted small">
+            Chào @ViewBag.Username 
+            <span class="badge bg-info text-white ms-2">@ViewBag.Role</span>
+        </p>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-white border rounded-pill px-4 shadow-sm fw-bold" href="/Dashboard/ExportCsv">
+            <i class="bi bi-download me-2"></i> Xuất CSV
+        </a>
+        <button class="btn btn-white border rounded-pill px-4 shadow-sm fw-bold" onclick="location.reload()">
+            <i class="bi bi-arrow-clockwise"></i> Làm mới
+        </button>
+        <button class="btn btn-dark rounded-pill px-4 shadow-sm fw-bold" onclick="window.print()">
+            <i class="bi bi-printer me-2"></i> In báo cáo
+        </button>
+    </div>
+</div>
+
+@if (ViewBag.IsAdmin)
+{
+    <!-- ADMIN DASHBOARD -->
+    <div class="row g-4 mb-5 animate-slide-up">
+        <div class="col-md-6 col-lg-4">
+            <div class="custom-card p-4 border-0 shadow-sm text-center position-relative overflow-hidden"
+                 style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white;">
+                <i class="bi bi-book position-absolute opacity-10" style="font-size: 5rem; right: -10px; top: -10px;"></i>
+                <p class="mb-1 opacity-75 fw-semibold text-uppercase small">Tổng số học phần</p>
+                <h2 class="display-5 fw-800 mb-0">@ViewBag.TongHocPhan</h2>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="custom-card p-4 border-0 shadow-sm text-center position-relative overflow-hidden"
+                 style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: white;">
+                <i class="bi bi-people position-absolute opacity-10" style="font-size: 5rem; right: -10px; top: -10px;"></i>
+                <p class="mb-1 opacity-75 fw-semibold text-uppercase small">Tổng người dùng</p>
+                <h2 class="display-5 fw-800 mb-0">@ViewBag.TongNguoiDung</h2>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="custom-card p-4 border-0 shadow-sm text-center">
+                <p class="mb-1 text-muted fw-semibold text-uppercase small">Tổng số tín chỉ</p>
+                <h2 class="display-5 fw-800 mb-0 text-primary">@ViewBag.TongTinChi</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5 animate-slide-up" style="animation-delay: 0.1s;">
+        <div class="col-md-6 col-lg-3">
+            <div class="custom-card p-4 border-0 shadow-sm text-center">
+                <div class="bg-danger bg-opacity-10 p-3 rounded-3 d-inline-block mb-3">
+                    <i class="bi bi-shield-check text-danger fs-4"></i>
+                </div>
+                <p class="mb-1 text-muted fw-semibold text-uppercase small">Số Admin</p>
+                <h3 class="fw-800 mb-0 text-danger">@ViewBag.SoAdmin</h3>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="custom-card p-4 border-0 shadow-sm text-center">
+                <div class="bg-success bg-opacity-10 p-3 rounded-3 d-inline-block mb-3">
+                    <i class="bi bi-person-check text-success fs-4"></i>
+                </div>
+                <p class="mb-1 text-muted fw-semibold text-uppercase small">Số Giáo viên</p>
+                <h3 class="fw-800 mb-0 text-success">@ViewBag.SoGiaoVien</h3>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-6">
+            <div class="custom-card p-4 border-0 shadow-sm text-center">
+                <p class="mb-1 text-muted fw-semibold text-uppercase small">Tín chỉ trung bình</p>
+                @{
+                    double avg = ViewBag.TongHocPhan > 0 ? (double)ViewBag.TongTinChi / ViewBag.TongHocPhan : 0;
+                }
+                <h2 class="display-5 fw-800 mb-0 text-success">@avg.ToString("0.0")</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="col-12">
+            <div class="custom-card p-5 border-0 shadow-sm">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                        <i class="bi bi-bar-chart-line-fill text-primary fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">Phân tích cơ cấu học phần theo tín chỉ</h5>
+                </div>
+
+                <div style="height: 400px; width: 100%;">
+                    <canvas id="realtimeChart"></canvas>
+                </div>
+
+                <div class="mt-4 pt-4 border-top text-center">
+                    <p class="text-muted mb-0 small">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Biểu đồ tự động cập nhật dựa trên dữ liệu <code>GROUP BY SoTinChi</code> từ SQL Server.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- TEACHER DASHBOARD -->
+    <div class="row g-4 mb-5 animate-slide-up">
+        <div class="col-12">
+            <div class="custom-card p-5 border-0 shadow-sm bg-light">
+                <div class="d-flex align-items-center">
+                    <div class="bg-info bg-opacity-10 p-4 rounded-4 me-4">
+                        <i class="bi bi-mortarboard-fill text-info" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-800 mb-1">Chào bạn @ViewBag.Username!</h4>
+                        <p class="text-muted mb-0">
+                            Bạn đang ở chế độ <span class="badge bg-info">Giáo viên</span>. 
+                            Bạn có quyền xem các học phần và chỉnh sửa phần mô tả ở các môn được phân công.
+                            Các thông tin khác sẽ do Quản trị viên quản lý.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5 animate-slide-up" style="animation-delay: 0.1s;">
+        <div class="col-md-6 col-lg-4">
+            <div class="custom-card p-4 border-0 shadow-sm text-center position-relative overflow-hidden"
+                 style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white;">
+                <i class="bi bi-book position-absolute opacity-10" style="font-size: 5rem; right: -10px; top: -10px;"></i>
+                <p class="mb-1 opacity-75 fw-semibold text-uppercase small">Tổng số học phần</p>
+                <h2 class="display-5 fw-800 mb-0">@ViewBag.TongHocPhan</h2>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="custom-card p-4 border-0 shadow-sm text-center">
+                <p class="mb-1 text-muted fw-semibold text-uppercase small">Tổng số tín chỉ</p>
+                <h2 class="display-5 fw-800 mb-0 text-primary">@ViewBag.TongTinChi</h2>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-4">
+            <div class="custom-card p-4 border-0 shadow-sm text-center">
+                <p class="mb-1 text-muted fw-semibold text-uppercase small">Tín chỉ trung bình</p>
+                @{
+                    double avgTeacher = ViewBag.TongHocPhan > 0 ? (double)ViewBag.TongTinChi / ViewBag.TongHocPhan : 0;
+                }
+                <h2 class="display-5 fw-800 mb-0 text-success">@avgTeacher.ToString("0.0")</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="col-12">
+            <div class="custom-card p-5 border-0 shadow-sm">
+                <div class="alert alert-info d-flex align-items-center" role="alert">
+                    <i class="bi bi-info-circle-fill me-3" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <strong>💡 Thông tin cho Giáo viên:</strong>
+                        <p class="mb-0 mt-2">
+                            Bạn có thể vào trang Môn học của tôi để cập nhật mô tả các học phần mình phụ trách.
+                            Những chức năng thêm, xóa và chỉnh sửa thông tin học phần khác vẫn thuộc quyền Quản trị viên.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a href="/HocPhan/MonHocCuaToi" class="btn btn-primary">
+                        <i class="bi bi-book me-2"></i>Môn học của tôi
+                    </a>
+                    <a href="/Home/Index" class="btn btn-secondary ms-2">
+                        <i class="bi bi-house me-2"></i>Quay về trang chủ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @if (ViewBag.IsAdmin)
+    {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Cấu hình Font chữ Global
+            Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+            Chart.defaults.color = '#64748b';
+
+            // Lấy dữ liệu từ ViewBag (Controller gửi xuống)
+            // Chuyển đổi List C# sang mảng Javascript
+            const labelsTinChi = @Html.Raw(Json.Serialize(ViewBag.TinChi));
+            const dataSoLuong = @Html.Raw(Json.Serialize(ViewBag.SoLuong));
+
+            const ctx = document.getElementById('realtimeChart').getContext('2d');
+
+            // Tạo hiệu ứng Gradient cho cột biểu đồ
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, '#6366f1');
+            gradient.addColorStop(1, '#a855f7');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labelsTinChi.map(t => t + " Tín chỉ"), // Biến số 2 thành "2 Tín chỉ"
+                    datasets: [{
+                        label: 'Số lượng học phần',
+                        data: dataSoLuong,
+                        backgroundColor: gradient,
+                        borderRadius: 15,
+                        barThickness: 50,
+                        hoverBackgroundColor: '#4f46e5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            padding: 12,
+                            cornerRadius: 10,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f1f5f9', drawBorder: false },
+                            ticks: { stepSize: 1, font: { weight: '600' } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { weight: '600' } }
+                        }
+                    }
+                }
+            });
+        </script>
+    }
+}

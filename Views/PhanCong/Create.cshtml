@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Thêm phân công giảng dạy";
+    var giaoVienList = ViewBag.GiaoVienList as List<SelectListItem> ?? new List<SelectListItem>();
+    var hocPhanList = ViewBag.HocPhanList as List<SelectListItem> ?? new List<SelectListItem>();
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="custom-card shadow-sm border-0">
+            <div class="text-center mb-4">
+                <div class="bg-primary text-white d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-diagram-3-fill fs-3"></i>
+                </div>
+                <h2 class="fw-bold">Thêm phân công giảng dạy</h2>
+                <p class="text-muted mb-0">Chọn giáo viên và học phần cần phụ trách.</p>
+            </div>
+
+            <form method="post" novalidate>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Giáo viên</label>
+                    <select class="form-select" name="idNguoiDung" required>
+                        <option value="">-- Chọn giáo viên --</option>
+                        @foreach (var item in giaoVienList)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Học phần</label>
+                    <select class="form-select" name="idHocPhan" required>
+                        <option value="">-- Chọn học phần --</option>
+                        @foreach (var item in hocPhanList)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary py-3 fw-bold shadow-sm">
+                        <i class="bi bi-check-circle-fill me-2"></i>Xác nhận phân công
+                    </button>
+                    <a href="/PhanCong/Index" class="btn btn-light py-2 text-muted fw-semibold">Quay lại danh sách phân công</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

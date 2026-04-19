@@ -1,0 +1,55 @@
+@model QuanLyHocPhanMVC.Models.HocPhan
+
+@{
+    ViewData["Title"] = "Chỉnh sửa mô tả học phần";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="custom-card shadow-sm border-0">
+            <div class="text-center mb-4">
+                <div class="bg-success text-white d-inline-flex align-items-center justify-content-center rounded-circle mb-3 shadow" style="width: 60px; height: 60px;">
+                    <i class="bi bi-card-text fs-3"></i>
+                </div>
+                <h2 class="fw-bold mb-1">Cập nhật mô tả học phần</h2>
+                <p class="text-muted mb-0">Bạn chỉ được chỉnh sửa trường mô tả của học phần được phân công.</p>
+            </div>
+
+            <form method="post" novalidate>
+                <input type="hidden" name="IDHocPhan" value="@Model.IDHocPhan" />
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Mã học phần</label>
+                    <input type="text" class="form-control bg-light" value="@Model.MaHocPhan" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Tên học phần</label>
+                    <input type="text" class="form-control bg-light" value="@Model.TenHocPhan" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Số tín chỉ</label>
+                    <input type="text" class="form-control bg-light" value="@Model.SoTinChi" readonly />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Mô tả học phần</label>
+                    <textarea asp-for="MoTa" class="form-control" rows="6" style="border-radius: 12px;" placeholder="Nhập mô tả mới..."></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger small"></span>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary py-3 fw-bold shadow-sm">
+                        <i class="bi bi-check-circle-fill me-2"></i>Lưu mô tả
+                    </button>
+                    <a href="/HocPhan/MonHocCuaToi" class="btn btn-light py-2 text-muted fw-semibold">Quay lại danh sách môn học của tôi</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

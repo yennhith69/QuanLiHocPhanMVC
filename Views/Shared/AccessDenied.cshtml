@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Từ chối truy cập";
+}
+
+<div style="text-align: center; padding: 50px; margin-top: 50px;">
+    <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 20px; border-radius: 5px; max-width: 500px; margin: 0 auto;">
+        <h2 style="color: #721c24;">⛔ Từ chối truy cập</h2>
+        <p style="color: #721c24; font-size: 16px;">@ViewBag.ErrorMessage</p>
+        <p style="color: #721c24;">Bạn không có quyền truy cập vào trang này. Vui lòng liên hệ với quản trị viên nếu bạn tin rằng đây là một lỗi.</p>
+        
+        <div style="margin-top: 20px;">
+            <a href="/Home/Index" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block;">
+                Quay về Trang chủ
+            </a>
+        </div>
+    </div>
+</div>

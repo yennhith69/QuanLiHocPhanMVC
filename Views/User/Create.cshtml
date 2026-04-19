@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Thêm Người dùng mới";
+}
+
+<h2>Thêm Người dùng mới</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+        @ViewBag.Error
+    </div>
+}
+
+@model QuanLyHocPhanMVC.Models.NguoiDung
+
+<form method="post" style="max-width: 500px;" novalidate>
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="Username"><strong>Username:</strong></label>
+        <input asp-for="Username" id="Username" placeholder="Nhập username" style="width: 100%; padding: 8px;" />
+        <span asp-validation-for="Username" class="text-danger small"></span>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="Password"><strong>Password:</strong></label>
+        <input asp-for="Password" type="password" id="Password" placeholder="Nhập password" style="width: 100%; padding: 8px;" />
+        <span asp-validation-for="Password" class="text-danger small"></span>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="Role"><strong>Role:</strong></label>
+        <select asp-for="Role" id="Role" style="width: 100%; padding: 8px;">
+            <option value="GiaoVien">Giáo viên</option>
+            <option value="Admin">Quản trị viên</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger small"></span>
+    </div>
+
+    <div>
+        <button type="submit" style="padding: 8px 20px; background-color: #28a745; color: white; border: none; cursor: pointer;">Thêm</button>
+        <a href="/User/Index" style="padding: 8px 20px; background-color: #6c757d; color: white; text-decoration: none; display: inline-block;">Hủy</a>
+    </div>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

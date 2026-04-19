@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="text-center py-5 mb-5 animate-slide-up">
+    <div class="d-inline-block px-4 py-2 rounded-pill bg-white shadow-sm border mb-4">
+        <span class="text-primary fw-bold">Hệ thống quản lý học phần </span>
+    </div>
+    <h1 class="display-3 fw-800 text-dark mb-3" style="letter-spacing: -2px;">
+        Học tập thông minh hơn với <span class="text-primary">NEU</span>
+</div>
+<p class="lead text-muted mx-auto" style="max-width: 600px;">
+    Nền tảng quản lý học phần hiện đại dành cho sinh viên NEU. Tối ưu hóa lộ trình học tập và quản lý dữ liệu hiệu quả chỉ với vài cú click.
+</p>
+<div class="mt-5 d-flex justify-content-center gap-3">
+    <a href="/HocPhan/DanhSach" class="btn btn-primary px-5 py-3 rounded-pill fw-bold shadow-lg">
+        Khám phá ngay
+    </a>
+    <a href="#features" class="btn btn-light px-5 py-3 rounded-pill fw-bold border">
+        Tìm hiểu thêm
+    </a>
+</div>
+</div>
+
+<div id="features" class="row g-4 mb-5">
+    <div class="col-md-6 col-lg-4">
+        <a href="/HocPhan/DanhSach" class="text-decoration-none text-reset d-block h-100">
+            <div class="custom-card h-100 border-0 shadow-sm p-4 text-center hover-up clickable-card">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-4 d-inline-flex p-3 mb-3">
+                    <i class="bi bi-collection-fill fs-3"></i>
+                </div>
+                <h4 class="fw-bold">Quản lý Học phần</h4>
+                <p class="text-muted small">Tra cứu, thêm mới và chỉnh sửa danh mục học phần một cách trực quan.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <a href="/Dashboard/Index" class="text-decoration-none text-reset d-block h-100">
+            <div class="custom-card h-100 border-0 shadow-sm p-4 text-center hover-up clickable-card">
+                <div class="bg-success bg-opacity-10 text-success rounded-4 d-inline-flex p-3 mb-3">
+                    <i class="bi bi-graph-up-arrow fs-3"></i>
+                </div>
+                <h4 class="fw-bold">Thống kê dữ liệu</h4>
+                <p class="text-muted small">Theo dõi số lượng tín chỉ và phân loại môn học thông qua Dashboard.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <a href="/Account/Login" class="text-decoration-none text-reset d-block h-100">
+            <div class="custom-card h-100 border-0 shadow-sm p-4 text-center hover-up clickable-card">
+                <div class="bg-warning bg-opacity-10 text-warning rounded-4 d-inline-flex p-3 mb-3">
+                    <i class="bi bi-shield-lock-fill fs-3"></i>
+                </div>
+                <h4 class="fw-bold">Bảo mật tối đa</h4>
+                <p class="text-muted small">Hệ thống phân quyền người dùng và bảo vệ dữ liệu an toàn tuyệt đối.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="custom-card bg-dark text-white p-5 rounded-5 shadow-lg border-0 mb-5">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <h2 class="display-4 fw-800">50+</h2>
+            <p class="text-light text-opacity-50">Môn học ngành</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="display-4 fw-800">1.2k</h2>
+            <p class="text-light text-opacity-50">Sinh viên truy cập</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="display-4 fw-800">100%</h2>
+            <p class="text-light text-opacity-50">Độ chính xác dữ liệu</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fw-800 {
+        font-weight: 800;
+    }
+
+    .hover-up {
+        transition: all 0.3s ease;
+    }
+
+        .hover-up:hover {
+            transform: translateY(-10px);
+        }
+
+    .clickable-card {
+        cursor: pointer;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @@keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

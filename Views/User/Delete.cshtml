@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Xóa Người dùng";
+}
+
+<h2>Xóa Người dùng</h2>
+
+<div style="border: 1px solid #ff9800; padding: 15px; background-color: #fff3cd; margin-bottom: 20px;">
+    <p><strong>Bạn có chắc chắn muốn xóa người dùng này không?</strong></p>
+    <p>Hành động này không thể hoàn tác.</p>
+</div>
+
+@model QuanLyHocPhanMVC.Models.NguoiDung
+
+<table border="1" cellpadding="10" style="max-width: 500px;">
+    <tr>
+        <th>ID</th>
+        <td>@Model.ID</td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td>@Model.Username</td>
+    </tr>
+    <tr>
+        <th>Password</th>
+        <td>@Model.Password</td>
+    </tr>
+    <tr>
+        <th>Role</th>
+        <td>@Model.Role</td>
+    </tr>
+</table>
+
+<br />
+
+<form method="post" action="/User/ConfirmDelete" style="display: inline;">
+    <input type="hidden" name="id" value="@Model.ID" />
+    <button type="submit" style="padding: 8px 20px; background-color: #dc3545; color: white; border: none; cursor: pointer;">Xác nhận Xóa</button>
+</form>
+
+<a href="/User/Index" style="padding: 8px 20px; background-color: #6c757d; color: white; text-decoration: none; display: inline-block;">Hủy</a>

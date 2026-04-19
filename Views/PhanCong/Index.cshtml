@@ -1,0 +1,79 @@
+@model List<QuanLyHocPhanMVC.Models.PhanCongHocPhanViewModel>
+
+@{
+    ViewData["Title"] = "Phân công giảng dạy";
+}
+
+<div class="custom-card shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Phân công giảng dạy</h2>
+            <p class="text-muted small mb-0">Thiết lập giáo viên phụ trách học phần trực tiếp trên hệ thống.</p>
+        </div>
+        <a href="/PhanCong/Create" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> Thêm phân công
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success border-0 rounded-3">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger border-0 rounded-3">@TempData["ErrorMessage"]</div>
+    }
+
+    <form method="get" class="mb-4">
+        <div class="input-group" style="max-width: 420px;">
+            <span class="input-group-text bg-white border-end-0" style="border-radius: 12px 0 0 12px;">
+                <i class="bi bi-search text-muted"></i>
+            </span>
+            <input type="text" name="search" class="form-control border-start-0 ps-0"
+                   value="@ViewBag.Search" placeholder="Tìm theo giáo viên hoặc học phần..."
+                   style="border-radius: 0 12px 12px 0;">
+            <button class="btn btn-dark ms-2 rounded-3 px-4" type="submit">Tìm</button>
+        </div>
+    </form>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info mb-0">Chưa có phân công nào.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Giáo viên</th>
+                        <th>Mã học phần</th>
+                        <th>Tên học phần</th>
+                        <th>Ngày phân công</th>
+                        <th class="text-end pe-4">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-semibold">@item.Username</td>
+                            <td><span class="badge bg-light text-dark border px-3 py-2">@item.MaHocPhan</span></td>
+                            <td>@item.TenHocPhan</td>
+                            <td>@item.NgayPhanCong.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td class="text-end pe-4">
+                                <form method="post" action="/PhanCong/Delete" class="d-inline"
+                                      onsubmit="return confirm('Bạn có chắc muốn xóa phân công này?');">
+                                    <input type="hidden" name="id" value="@item.ID" />
+                                    <button type="submit" class="btn btn-sm btn-light rounded-3 shadow-sm">
+                                        <i class="bi bi-trash text-danger"></i> Xóa
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

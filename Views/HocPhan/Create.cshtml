@@ -1,0 +1,78 @@
+﻿@model QuanLyHocPhanMVC.Models.HocPhan
+
+@{
+    ViewData["Title"] = "Thêm học phần mới";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="custom-card shadow-sm">
+            <div class="text-center mb-4">
+                <div class="bg-primary text-white d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-journal-plus fs-3"></i>
+                </div>
+                <h2 class="fw-bold">Thêm học phần</h2>
+                <p class="text-muted">Nhập thông tin chi tiết để tạo học phần mới</p>
+            </div>
+
+            <form method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Mã học phần</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-hash text-muted"></i></span>
+                        <input asp-for="MaHocPhan" class="form-control border-start-0" placeholder="VD: IT101" />
+                    </div>
+                    <span asp-validation-for="MaHocPhan" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Tên học phần</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-bookmark-fill text-muted"></i></span>
+                        <input asp-for="TenHocPhan" class="form-control border-start-0" placeholder="Nhập tên môn học..." />
+                    </div>
+                    <span asp-validation-for="TenHocPhan" class="text-danger small"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Số tín chỉ</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-123 text-muted"></i></span>
+                            <input asp-for="SoTinChi" type="number" class="form-control border-start-0" placeholder="0" min="1" />
+                        </div>
+                        <span asp-validation-for="SoTinChi" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Phân loại</label>
+                        <select class="form-select border-1" style="border-radius: 12px; padding: 0.6rem;">
+                            <option selected>Cơ sở ngành</option>
+                            <option>Chuyên ngành</option>
+                            <option>Đại cương</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Mô tả học phần</label>
+                    <textarea asp-for="MoTa" class="form-control" rows="3" placeholder="Viết tóm tắt nội dung học phần..." style="border-radius: 12px;"></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger small"></span>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary py-3 fw-bold shadow-sm">
+                        <i class="bi bi-cloud-arrow-up-fill me-2"></i> Xác nhận thêm mới
+                    </button>
+                    <a href="/HocPhan/DanhSach" class="btn btn-light py-2 text-muted fw-semibold">
+                        Hủy bỏ
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

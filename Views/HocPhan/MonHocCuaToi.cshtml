@@ -1,0 +1,78 @@
+@model List<QuanLyHocPhanMVC.Models.HocPhan>
+
+@{
+    ViewData["Title"] = "Môn học của tôi";
+}
+
+<div class="custom-card shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Môn học của tôi</h2>
+            <p class="text-muted small mb-0">Danh sách học phần bạn được phân công phụ trách. Bạn chỉ có thể chỉnh sửa phần mô tả.</p>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success border-0 rounded-3 mb-4">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form method="get" class="mb-4">
+        <div class="input-group" style="max-width: 420px;">
+            <span class="input-group-text bg-white border-end-0" style="border-radius: 12px 0 0 12px;">
+                <i class="bi bi-search text-muted"></i>
+            </span>
+            <input type="text" name="search" class="form-control border-start-0 ps-0"
+                   value="@ViewBag.Search"
+                   placeholder="Tìm theo mã hoặc tên học phần..." style="border-radius: 0 12px 12px 0;">
+            <button class="btn btn-dark ms-2 rounded-3 px-4" type="submit">Tìm</button>
+        </div>
+    </form>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info mb-0">
+            Hiện tại bạn chưa được phân công học phần nào.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Mã học phần</th>
+                        <th>Tên học phần</th>
+                        <th class="text-center">Số tín chỉ</th>
+                        <th>Mô tả</th>
+                        <th class="text-end pe-4">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hp in Model)
+                    {
+                        <tr>
+                            <td class="ps-4">
+                                <span class="badge bg-light text-dark border px-3 py-2 fw-semibold">@hp.MaHocPhan</span>
+                            </td>
+                            <td class="fw-semibold">@hp.TenHocPhan</td>
+                            <td class="text-center text-primary fw-bold">@hp.SoTinChi</td>
+                            <td>
+                                <small class="text-muted text-truncate d-inline-block" style="max-width: 280px;">
+                                    @(string.IsNullOrWhiteSpace(hp.MoTa) ? "Chưa có mô tả" : hp.MoTa)
+                                </small>
+                            </td>
+                            <td class="text-end pe-4">
+                                <a href="/HocPhan/SuaMoTaMonHocCuaToi/@hp.IDHocPhan" class="btn btn-light btn-sm rounded-3 shadow-sm">
+                                    <i class="bi bi-pencil-square text-success"></i> Sửa mô tả
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
